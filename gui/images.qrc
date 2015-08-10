@@ -3,5 +3,7 @@
         <file>retr3d.png</file>
         <file>retr3d.ico</file>
         <file>xRod.png</file>
+        <file>gpl.png</file>
+        <file>gpl.txt</file>
     </qresource>
 </RCC>
