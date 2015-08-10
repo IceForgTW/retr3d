@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>retr3d.png</file>
+        <file>retr3d.ico</file>
+        <file>xRod.png</file>
+    </qresource>
+</RCC>
