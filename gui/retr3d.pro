@@ -13,9 +13,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    makeprinter.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    makeprinter.h
 
 FORMS    += mainwindow.ui
 
@@ -30,3 +32,4 @@ QMAKE_CXXFLAGS += C:\Python27\libs\python27.lib
 RESOURCES += \
     images.qrc
 
+CONFIG += c++11

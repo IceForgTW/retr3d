@@ -377,18 +377,41 @@
        <rect>
         <x>10</x>
         <y>20</y>
-        <width>481</width>
-        <height>221</height>
+        <width>361</width>
+        <height>201</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>This file is part of Retr3d.
+
+Retr3d is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Retr3d is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Retr3d.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_11">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>20</y>
+        <width>141</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="text">
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="images.qrc">:/retr3d.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
+       <pixmap resource="images.qrc">:/gpl.png</pixmap>
       </property>
      </widget>
     </widget>

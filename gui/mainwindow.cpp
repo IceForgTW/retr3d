@@ -1,8 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "makeprinter.h"
 #include <Python.h>
 #include "QFileDialog"
 #include <iostream>
+#include <thread>
+#include "QThread"
+#include "QFuture"
+#include "QtConcurrent/QtConcurrent"
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -25,6 +30,7 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_next1_clicked()
 {
     ui->stackedWidget->setCurrentIndex(2);
+    QFuture<void> t1 = QtConcurrent::run(foo);
 }
 
 void MainWindow::on_next2_clicked()
