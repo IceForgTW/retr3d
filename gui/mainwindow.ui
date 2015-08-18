@@ -77,6 +77,9 @@
     </widget>
     <widget class="QWidget" name="page_5">
      <widget class="QPushButton" name="next1">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>410</x>
@@ -93,9 +96,9 @@
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>90</y>
+        <y>60</y>
         <width>441</width>
-        <height>131</height>
+        <height>181</height>
        </rect>
       </property>
       <property name="title">
@@ -119,6 +122,9 @@
          <width>321</width>
          <height>20</height>
         </rect>
+       </property>
+       <property name="text">
+        <string>C:/Program Files (x86)/FreeCAD 0.15/bin</string>
        </property>
       </widget>
       <widget class="QPushButton" name="filesDir_push">
@@ -173,6 +179,45 @@
         <string>Where to Store Printer Files</string>
        </property>
       </widget>
+      <widget class="QLineEdit" name="scriptsDir">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>140</y>
+         <width>321</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="scriptsDir_push">
+       <property name="geometry">
+        <rect>
+         <x>350</x>
+         <y>140</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Browse...</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_12">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>120</y>
+         <width>151</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Location of Retr3d Scripts</string>
+       </property>
+      </widget>
      </widget>
      <widget class="QLabel" name="label_4">
       <property name="geometry">
@@ -190,6 +235,9 @@
     </widget>
     <widget class="QWidget" name="page_6">
      <widget class="QPushButton" name="next2">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>410</x>
@@ -223,6 +271,9 @@
          <height>20</height>
         </rect>
        </property>
+       <property name="text">
+        <string>7.9</string>
+       </property>
       </widget>
       <widget class="QLineEdit" name="xRodDiaBottom">
        <property name="geometry">
@@ -233,6 +284,9 @@
          <height>20</height>
         </rect>
        </property>
+       <property name="text">
+        <string>7.9</string>
+       </property>
       </widget>
       <widget class="QLineEdit" name="xRodLength">
        <property name="geometry">
@@ -242,6 +296,9 @@
          <width>131</width>
          <height>20</height>
         </rect>
+       </property>
+       <property name="text">
+        <string>400</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_5">

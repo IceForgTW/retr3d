@@ -6,6 +6,9 @@
 #include <QSharedDataPointer>
 #include <QWidget>
 #include <QMutex>
+#include <iostream>
+
+using namespace std;
 
 class makePrinterData;
 
@@ -26,6 +29,7 @@ private:
 
 void foo();
 long bar();
-char const*status();
+char const*status(string str);
+char const*scriptPath(string str);
 
 #endif // MAKEPRINTER_H

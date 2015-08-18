@@ -36,10 +36,13 @@ private slots:
 
     void on_next3_clicked();
 
-    void updateProgress();
+void on_xRodDiaTop_textChanged(const QString &arg1);
 
-void startWorkInAThread();
+void on_xRodDiaBottom_textChanged(const QString &arg1);
 
+void on_xRodLength_textChanged(const QString &arg1);
+
+void on_scriptsDir_push_clicked();
 
 private:
     Ui::MainWindow *ui;
