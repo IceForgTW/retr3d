@@ -363,6 +363,9 @@
     </widget>
     <widget class="QWidget" name="page_7">
      <widget class="QPushButton" name="next3">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>410</x>

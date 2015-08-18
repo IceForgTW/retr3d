@@ -144,13 +144,9 @@ void foo()
     Py_Initialize();
 
     PyRun_SimpleString("import sys");
-    cout << "import sys" << endl;
     PyRun_SimpleString("import os");
-    cout << "import os" << endl;
     PyRun_SimpleString("sys.path.append('C:\\\\Users\\\\Master\\\\Git\\\\retr3d\\\\')");
-    cout << "append" << endl;
     PyRun_SimpleString("execfile('C:\\\\Users\\\\Master\\\\Git\\\\retr3d\\\\makePrinter.py')");
-    cout << "execfile" << endl;
 
     Py_Finalize();
 }

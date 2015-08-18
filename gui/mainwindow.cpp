@@ -1,3 +1,24 @@
+/*
+Copyright 2015.
+   - Primarily authored by Michael Uttmark
+
+This file is part of Retr3d, a program to 3D model printable parts for the construction of 3D printers.
+See https://github.com/Maaphoo/Retr3d for more information.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This progra is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "makeprinter.h"
@@ -30,7 +51,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(worker, SIGNAL(valueChanged(QString)), SLOT(onProgressChanged(QString)));
     connect(worker, SIGNAL(workRequested()), thread, SLOT(start()));
     connect(thread, SIGNAL(started()), worker, SLOT(doWork()));
+    connect(worker, SIGNAL(finished()), SLOT(onProgressChanged()));
     connect(worker, SIGNAL(finished()), thread, SLOT(quit()), Qt::DirectConnection);
+
 }
 
 MainWindow::~MainWindow()
@@ -48,9 +71,15 @@ MainWindow::~MainWindow()
 void MainWindow::onProgressChanged(QString info) {
     // Processing code
     ui->printerProgress->setValue(info.toInt());
+
     string str;
     str = ui->scriptsDir->text().toStdString();
     ui->progressLabel->setText(status(str));
+    if(info.toInt()>99){
+        ui->progressLabel->setText("");
+        ui->next3->setEnabled(true);
+    }
+
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -515,6 +544,7 @@ void MainWindow::on_next2_clicked()
 
     ui->stackedWidget->setCurrentIndex(3);
     QFuture<void> t1 = QtConcurrent::run(foo);
+
     // To avoid having two threads running simultaneously, the previous thread is aborted.
     worker->abort();
 
