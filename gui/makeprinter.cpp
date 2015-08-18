@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "makeprinter.h"
+#include "mainwindow.h"
 #include <iostream>
 #include <thread>
 #include <Python.h>
@@ -63,7 +64,9 @@ long bar()
 {
 float x;
 x = 0;
-std::ifstream infile("C:\\Users\\Master\\Git\\retr3d\\logs\\retr3d.log");
+string str = path;
+string pat = string(scriptPath(str))+"logs\\retr3d.log";
+std::ifstream infile(pat);
 string log;
 std::string line;
 while (std::getline(infile, line))
@@ -112,9 +115,8 @@ char const*status(string str)
 int x;
 x = 0;
 
-string path;
-path = string(scriptPath(str))+"logs\\retr3d.log";
-std::ifstream infile(path);
+string pat = string(scriptPath(str))+"logs\\retr3d.log";
+std::ifstream infile(pat);
 string log;
 string logEnd;
 std::string line;
@@ -144,13 +146,24 @@ void foo()
     Py_Initialize();
 
     PyRun_SimpleString("import sys");
-    cout << "import sys" << endl;
     PyRun_SimpleString("import os");
-    cout << "import os" << endl;
-    PyRun_SimpleString("sys.path.append('C:\\\\Users\\\\Master\\\\Git\\\\retr3d\\\\')");
-    cout << "append" << endl;
-    PyRun_SimpleString("execfile('C:\\\\Users\\\\Master\\\\Git\\\\retr3d\\\\makePrinter.py')");
-    cout << "execfile" << endl;
+    string str = path;
+    size_t index = 0;
+    while (true) {
+         /* Locate the substring to replace. */
+         index = str.find("/", index);
+         if (index == std::string::npos) break;
+
+         /* Make the replacement. */
+         str.replace(index, 1, "\\\\");
+
+         /* Advance index forward so the next iteration doesn't pick it up as well. */
+         index += 3;
+    }
+    str =  str+"\\\\";
+
+    PyRun_SimpleString(("sys.path.append('"+str+"')").c_str());
+    PyRun_SimpleString(("execfile('"+str+"makePrinter.py')").c_str());
 
     Py_Finalize();
 }

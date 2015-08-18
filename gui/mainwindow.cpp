@@ -36,6 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <fstream>
 using namespace std;
 int value(5);
+string path = "";
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -561,6 +562,7 @@ void MainWindow::on_next1_clicked()
     ui->xRodDiaTop->setValidator(validator);
     ui->xRodDiaBottom->setValidator(validator);
     ui->xRodLength->setValidator(validator);
+    ::path = ui->scriptsDir->text().toStdString();
 }
 
 

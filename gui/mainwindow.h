@@ -27,6 +27,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "makeprinter.h"
 #include "worker.h"
 
+extern string path;
+
 namespace Ui {
 class MainWindow;
 }
