@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    makeprinter.cpp
+    makeprinter.cpp \
+    worker.cpp
 
 HEADERS  += mainwindow.h \
-    makeprinter.h
+    makeprinter.h \
+    worker.h
 
 FORMS    += mainwindow.ui
 

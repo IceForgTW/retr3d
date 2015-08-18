@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QSharedDataPointer>
 #include <QWidget>
+#include <QMutex>
 
 class makePrinterData;
 
@@ -16,10 +17,15 @@ public:
     makePrinter &operator=(const makePrinter &);
     ~makePrinter();
 
+public slots:
+    void onProgressChagned(int info);
+
 private:
     QSharedDataPointer<makePrinterData> data;
 };
 
 void foo();
+long bar();
+char const*status();
 
 #endif // MAKEPRINTER_H
