@@ -49,7 +49,7 @@ private:
 };
 
 void foo();
-long bar(string str);
+long bar();
 char const*status(string str);
 char const*scriptPath(string str);
 

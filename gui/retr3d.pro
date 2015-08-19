@@ -34,4 +34,4 @@ QMAKE_CXXFLAGS += C:\Python27\libs\python27.lib
 RESOURCES += \
     images.qrc
 
-CONFIG += c++11
+CONFIG += c++11 static
