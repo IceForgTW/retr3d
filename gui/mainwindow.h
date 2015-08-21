@@ -67,6 +67,8 @@ void on_xRodLength_textChanged(const QString &arg1);
 
 void on_scriptsDir_push_clicked();
 
+void on_next2_1_clicked();
+
 private:
     Ui::MainWindow *ui;
     /**

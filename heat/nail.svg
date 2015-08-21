@@ -1,0 +1,6 @@
+<svg width="3.5mm" height="3.5mm">
+
+    <circle cx="1.75mm" cy="1.75mm" r="1.5mm" fill="white" stroke="black" stroke-width=".5mm" />
+
+    <circle cx="5.25mm" cy="5.25mm" r="1.5mm" fill="white" stroke="red" stroke-width=".5mm" />
+</svg>

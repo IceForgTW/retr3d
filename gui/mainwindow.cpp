@@ -52,7 +52,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(worker, SIGNAL(valueChanged(QString)), SLOT(onProgressChanged(QString)));
     connect(worker, SIGNAL(workRequested()), thread, SLOT(start()));
     connect(thread, SIGNAL(started()), worker, SLOT(doWork()));
-    connect(worker, SIGNAL(finished()), SLOT(onProgressChanged()));
     connect(worker, SIGNAL(finished()), thread, SLOT(quit()), Qt::DirectConnection);
 
 }
@@ -85,7 +84,7 @@ void MainWindow::onProgressChanged(QString info) {
 
 void MainWindow::on_pushButton_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex()+1);
 }
 
 void MainWindow::on_next2_clicked()
@@ -543,7 +542,7 @@ void MainWindow::on_next2_clicked()
      gv.close();
 
 
-    ui->stackedWidget->setCurrentIndex(3);
+     ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex()+1);
     QFuture<void> t1 = QtConcurrent::run(foo);
 
     // To avoid having two threads running simultaneously, the previous thread is aborted.
@@ -557,7 +556,7 @@ void MainWindow::on_next2_clicked()
 
 void MainWindow::on_next1_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(2);
+    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex()+1);
     QValidator *validator = new QIntValidator(0, 9999, this);
     ui->xRodDiaTop->setValidator(validator);
     ui->xRodDiaBottom->setValidator(validator);
@@ -568,7 +567,7 @@ void MainWindow::on_next1_clicked()
 
 void MainWindow::on_next3_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(4);
+    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex()+1);
 }
 
 void MainWindow::on_quit_clicked()
@@ -632,3 +631,9 @@ void MainWindow::on_xRodLength_textChanged(const QString &arg1)
     if(!(ui->xRodDiaTop->text().isEmpty())&&!(ui->xRodDiaBottom->text().isEmpty())&&!(ui->xRodLength->text().isEmpty())){ui->next2->setEnabled(true);}else{ui->next2->setEnabled(false);}
 }
 
+
+void MainWindow::on_next2_1_clicked()
+{
+    cout << "hi" <<  endl;
+    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex()+1);
+}

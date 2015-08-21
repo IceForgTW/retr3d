@@ -6,8 +6,8 @@
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_MAINWINDOW_H
-#define UI_MAINWINDOW_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
@@ -47,15 +47,25 @@ public:
     QLabel *label_12;
     QLabel *label_4;
     QWidget *page_6;
-    QPushButton *next2;
+    QPushButton *next2_1;
     QGroupBox *groupBox_2;
-    QLineEdit *xRodDiaTop;
-    QLineEdit *xRodDiaBottom;
-    QLineEdit *xRodLength;
+    QLineEdit *yRodDiaL;
+    QLineEdit *yRodDiaR;
+    QLineEdit *yRodLength;
     QLabel *label_5;
     QLabel *label_6;
     QLabel *label_7;
     QLabel *label_8;
+    QWidget *page_6_1;
+    QPushButton *next2;
+    QLabel *label_13;
+    QGroupBox *groupBox_3;
+    QLineEdit *xRodDiaTop;
+    QLineEdit *xRodDiaBottom;
+    QLineEdit *xRodLength;
+    QLabel *label_14;
+    QLabel *label_15;
+    QLabel *label_16;
     QWidget *page_7;
     QPushButton *next3;
     QProgressBar *printerProgress;
@@ -132,22 +142,22 @@ public:
         stackedWidget->addWidget(page_5);
         page_6 = new QWidget();
         page_6->setObjectName(QStringLiteral("page_6"));
-        next2 = new QPushButton(page_6);
-        next2->setObjectName(QStringLiteral("next2"));
-        next2->setEnabled(true);
-        next2->setGeometry(QRect(410, 260, 81, 31));
+        next2_1 = new QPushButton(page_6);
+        next2_1->setObjectName(QStringLiteral("next2_1"));
+        next2_1->setEnabled(true);
+        next2_1->setGeometry(QRect(410, 260, 81, 31));
         groupBox_2 = new QGroupBox(page_6);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
         groupBox_2->setGeometry(QRect(10, 60, 301, 181));
-        xRodDiaTop = new QLineEdit(groupBox_2);
-        xRodDiaTop->setObjectName(QStringLiteral("xRodDiaTop"));
-        xRodDiaTop->setGeometry(QRect(150, 30, 131, 20));
-        xRodDiaBottom = new QLineEdit(groupBox_2);
-        xRodDiaBottom->setObjectName(QStringLiteral("xRodDiaBottom"));
-        xRodDiaBottom->setGeometry(QRect(150, 80, 131, 20));
-        xRodLength = new QLineEdit(groupBox_2);
-        xRodLength->setObjectName(QStringLiteral("xRodLength"));
-        xRodLength->setGeometry(QRect(150, 130, 131, 20));
+        yRodDiaL = new QLineEdit(groupBox_2);
+        yRodDiaL->setObjectName(QStringLiteral("yRodDiaL"));
+        yRodDiaL->setGeometry(QRect(150, 30, 131, 20));
+        yRodDiaR = new QLineEdit(groupBox_2);
+        yRodDiaR->setObjectName(QStringLiteral("yRodDiaR"));
+        yRodDiaR->setGeometry(QRect(150, 80, 131, 20));
+        yRodLength = new QLineEdit(groupBox_2);
+        yRodLength->setObjectName(QStringLiteral("yRodLength"));
+        yRodLength->setGeometry(QRect(150, 130, 131, 20));
         label_5 = new QLabel(groupBox_2);
         label_5->setObjectName(QStringLiteral("label_5"));
         label_5->setGeometry(QRect(10, 30, 131, 16));
@@ -160,9 +170,42 @@ public:
         label_8 = new QLabel(page_6);
         label_8->setObjectName(QStringLiteral("label_8"));
         label_8->setGeometry(QRect(320, 20, 171, 221));
-        label_8->setPixmap(QPixmap(QString::fromUtf8(":/xRod.png")));
+        label_8->setPixmap(QPixmap(QString::fromUtf8(":/yRod.png")));
         label_8->setScaledContents(true);
         stackedWidget->addWidget(page_6);
+        page_6_1 = new QWidget();
+        page_6_1->setObjectName(QStringLiteral("page_6_1"));
+        next2 = new QPushButton(page_6_1);
+        next2->setObjectName(QStringLiteral("next2"));
+        next2->setEnabled(true);
+        next2->setGeometry(QRect(410, 260, 81, 31));
+        label_13 = new QLabel(page_6_1);
+        label_13->setObjectName(QStringLiteral("label_13"));
+        label_13->setGeometry(QRect(320, 20, 171, 221));
+        label_13->setPixmap(QPixmap(QString::fromUtf8(":/xRod.png")));
+        label_13->setScaledContents(true);
+        groupBox_3 = new QGroupBox(page_6_1);
+        groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
+        groupBox_3->setGeometry(QRect(10, 60, 301, 181));
+        xRodDiaTop = new QLineEdit(groupBox_3);
+        xRodDiaTop->setObjectName(QStringLiteral("xRodDiaTop"));
+        xRodDiaTop->setGeometry(QRect(150, 30, 131, 20));
+        xRodDiaBottom = new QLineEdit(groupBox_3);
+        xRodDiaBottom->setObjectName(QStringLiteral("xRodDiaBottom"));
+        xRodDiaBottom->setGeometry(QRect(150, 80, 131, 20));
+        xRodLength = new QLineEdit(groupBox_3);
+        xRodLength->setObjectName(QStringLiteral("xRodLength"));
+        xRodLength->setGeometry(QRect(150, 130, 131, 20));
+        label_14 = new QLabel(groupBox_3);
+        label_14->setObjectName(QStringLiteral("label_14"));
+        label_14->setGeometry(QRect(10, 30, 131, 16));
+        label_15 = new QLabel(groupBox_3);
+        label_15->setObjectName(QStringLiteral("label_15"));
+        label_15->setGeometry(QRect(10, 80, 131, 16));
+        label_16 = new QLabel(groupBox_3);
+        label_16->setObjectName(QStringLiteral("label_16"));
+        label_16->setGeometry(QRect(10, 130, 131, 16));
+        stackedWidget->addWidget(page_6_1);
         page_7 = new QWidget();
         page_7->setObjectName(QStringLiteral("page_7"));
         next3 = new QPushButton(page_7);
@@ -210,6 +253,7 @@ public:
         pushButton->setText(QApplication::translate("MainWindow", "Begin", 0));
         next1->setText(QApplication::translate("MainWindow", "Next", 0));
         groupBox->setTitle(QApplication::translate("MainWindow", "Locations", 0));
+        filesDir->setText(QApplication::translate("MainWindow", "C:/Users/Public/Documents/Printers", 0));
         freecadDir->setText(QApplication::translate("MainWindow", "C:/Program Files (x86)/FreeCAD 0.15/bin", 0));
         filesDir_push->setText(QApplication::translate("MainWindow", "Browse...", 0));
         freecadDir_push->setText(QApplication::translate("MainWindow", "Browse...", 0));
@@ -219,15 +263,24 @@ public:
         scriptsDir_push->setText(QApplication::translate("MainWindow", "Browse...", 0));
         label_12->setText(QApplication::translate("MainWindow", "Location of Retr3d Scripts", 0));
         label_4->setText(QApplication::translate("MainWindow", "Retr3d needs to know where things are. Please take a moment and input some file paths.", 0));
+        next2_1->setText(QApplication::translate("MainWindow", "Next", 0));
+        groupBox_2->setTitle(QApplication::translate("MainWindow", "Y Rod", 0));
+        yRodDiaL->setText(QApplication::translate("MainWindow", "12.7", 0));
+        yRodDiaR->setText(QApplication::translate("MainWindow", "12.7", 0));
+        yRodLength->setText(QApplication::translate("MainWindow", "460", 0));
+        label_5->setText(QApplication::translate("MainWindow", "Left Y Rod Diameter", 0));
+        label_6->setText(QApplication::translate("MainWindow", "Right Y Rod Diameter", 0));
+        label_7->setText(QApplication::translate("MainWindow", "Length of the Shorter Rod", 0));
+        label_8->setText(QString());
         next2->setText(QApplication::translate("MainWindow", "Next", 0));
-        groupBox_2->setTitle(QApplication::translate("MainWindow", "X Rod", 0));
+        label_13->setText(QString());
+        groupBox_3->setTitle(QApplication::translate("MainWindow", "X Rod", 0));
         xRodDiaTop->setText(QApplication::translate("MainWindow", "7.9", 0));
         xRodDiaBottom->setText(QApplication::translate("MainWindow", "7.9", 0));
         xRodLength->setText(QApplication::translate("MainWindow", "400", 0));
-        label_5->setText(QApplication::translate("MainWindow", "Top X Rod Diameter", 0));
-        label_6->setText(QApplication::translate("MainWindow", "Bottom X Rod Diameter", 0));
-        label_7->setText(QApplication::translate("MainWindow", "Length of the Shorter Rod", 0));
-        label_8->setText(QString());
+        label_14->setText(QApplication::translate("MainWindow", "Top X Rod Diameter", 0));
+        label_15->setText(QApplication::translate("MainWindow", "Bottom X Rod Diameter", 0));
+        label_16->setText(QApplication::translate("MainWindow", "Length of the Shorter Rod", 0));
         next3->setText(QApplication::translate("MainWindow", "Next", 0));
         label_9->setText(QApplication::translate("MainWindow", "Building Printer Files", 0));
         progressLabel->setText(QString());
@@ -257,4 +310,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // UI_MAINWINDOW_H
+#endif // MAINWINDOW_H
