@@ -14,19 +14,19 @@ def marlin():
 
         g = open(printerDir+'Marlin\\configuration.h','a')
 
-        baudrate = "250000"
-        maxTemp = str(230)
-        bedMaxTemp = str(120)
-        extruderTempSensor = str(1)
-        bedTempSensor = str(1)
-        xHomeDir = str(-1)
-        yHomeDir = str(-1)
-        zHomeDir = str(-1)
-        maxTolerance = 20 #mm
-        invertXDirection = False
-        invertYDirection = False
-        invertZDirection = False
-        invertEDirection = False
+        baudrate = str(gv.baudrate)
+        maxTemp = str(gv.maxTemp)
+        bedMaxTemp = str(gv.bedMaxTemp)
+        extruderTempSensor = str(gv.extruderTempSensor)
+        bedTempSensor = str(gv.bedTempSensor)
+        xHomeDir = str(gv.xHomeDir)
+        yHomeDir = str(gv.yHomeDir)
+        zHomeDir = str(gv.zHomeDir)
+        maxTolerance = gv.maxTolerance #mm
+        invertXDirection = gv.invertXDirection
+        invertYDirection = gv.invertYDirection
+        invertZDirection = gv.invertZDirection
+        invertEDirection = gv.invertEDirection
 
         if(invertEDirection==False):
             invertEDirection = "false"
@@ -48,14 +48,8 @@ def marlin():
         else:
             invertZDirection = "true"
 
-
-        ##TEST##
-
-        gv.printableWidth = 300
-        gv.printableLength = 300
-        gv.printableHeight = 300
-
-
+        if(gv.printableHeight==None):
+                gv.printableHeight = 200
 
         g.write('#ifndef CONFIGURATION_H\n')
         g.write('#define CONFIGURATION_H\n')
@@ -3832,6 +3826,3 @@ def pins():
         f.write('\n')
         f.write('#endif //__PINS_H\n')
         f.close()
-
-
-marlin()

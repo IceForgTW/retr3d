@@ -159,6 +159,7 @@ def makePrinter():
     import zipup
     import draw
     import checklist
+    import marlin
 
     # If any of the parameters have been changed, the includes must be reloaded
     # Normally, this would just be globalVariables because that is what would be changed,
@@ -209,6 +210,7 @@ def makePrinter():
         reload(zipup)
         reload(draw)
         reload(checklist)
+        reload(marlin)
 
     gv.reloadClasses = True
 
@@ -920,6 +922,7 @@ def makePrinter():
         uf.info("Finished slicing.", "Finished slicing", gv.level, source)
 
     checklist.create()
+    marlin.marlin()
     zipup.zipup()
 
 
