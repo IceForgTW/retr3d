@@ -1,3 +1,20 @@
+# Copyright 2015 Matthew Rogge and Michael Uttmark
+# 
+# This file is part of Retr3d.
+# 
+# Retr3d is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# Retr3d is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with Retr3d.  If not, see <http://www.gnu.org/licenses/>.
+
 from __future__ import division  # allows floating point division from integers
 import math
 
@@ -51,7 +68,7 @@ def makePrinter():
         uf.critical("Failure to import FreeCAD, check your configuration file.", 'Failure to import FreeCAD: ' + str(e),
                     gv.level, source)
 
-    import FreeCAD# as #
+    import FreeCADGui as Gui
 
     if platform.system() == 'Windows':
         if (App.Version()[1] > '14'):
@@ -64,7 +81,7 @@ def makePrinter():
                         "FreeCAD Version 0." + App.Version()[1] + " Revision " + App.Version()[2], gv.level, source)
 
     if platform.system() == 'Darwin':  # OSX
-        if (App.Version()[1] == '14'):
+        if (App.Version()[1] >= '14'):
             try:
                 import FreeCAD#
                 FreeCAD#.showMainWindow()
@@ -73,12 +90,6 @@ def makePrinter():
             finally:
                 uf.info("FreeCAD Version 0." + App.Version()[1] + " Revision " + App.Version()[2],
                         "FreeCAD Version 0." + App.Version()[1] + " Revision " + App.Version()[2], gv.level, source)
-        if (App.Version()[1] == '15'):
-            uf.critical(
-                "Retr3d on OSX is not compatible with FreeCAD version .15. Please upgrade to .16 or downgrade to .14 to continue.",
-                "VersionError: FreeCAD Version 0." + App.Version()[1] + " Revision " + App.Version()[2], gv.level,
-                source)
-            raise versionError
 
     if platform.system() == 'Linux':
         if (App.Version()[1] < '14'):
@@ -154,11 +165,15 @@ def makePrinter():
     import nozzle
     import xEndstop
     import zEndstop
+    import feet
+    import leadScrewCoupler
     import plate
     import slic3r
     import zipup
     import draw
     import checklist
+    import heatedbed
+    import marlin
 
     # If any of the parameters have been changed, the includes must be reloaded
     # Normally, this would just be globalVariables because that is what would be changed,
@@ -204,11 +219,15 @@ def makePrinter():
         reload(nozzle)
         reload(xEndstop)
         reload(zEndstop)
+        reload(feet)
+        reload(leadScrewCoupler)
         reload(plate)
         reload(slic3r)
         reload(zipup)
         reload(draw)
         reload(checklist)
+        reload(heatedbed)
+        reload(marlin)
 
     gv.reloadClasses = True
 
@@ -254,6 +273,8 @@ def makePrinter():
     nozzle = nozzle.Nozzle()
     xEndstop = xEndstop.XEndstop()
     zEndstop = zEndstop.ZEndstop()
+    feet = feet.Feet()
+    leadScrewCoupler = leadScrewCoupler.LeadScrewCoupler()
 
 
     # convert standard nut sizes to mm
@@ -271,7 +292,9 @@ def makePrinter():
 
     # Determine printed mounting hole diameters
     gv.printedToFrameDia = uf.adjustHole(gv.mountToFrameDia)
+    gv.printedToFrameHeadDia = uf.adjustHole(gv.mountToFrameHeadDia)
     gv.printedToPrintedDia = uf.adjustHole(gv.mountToPrintedDia)
+    gv.printedToPrintedNutFaceToFace = uf.adjustHole(gv.mountToPrintedNutFaceToFace)
 
     # Select Bushing and Lead Screw nuts
     gv.xBushingNutBottom = uf.pickBushingNut(gv.xRodDiaBottom)
@@ -631,11 +654,11 @@ def makePrinter():
     del gv.xAxisParts[:]
     del gv.yAxisParts[:]
     del gv.zAxisParts[:]
-
     # Make file for assembly
     uf.makeAssemblyFile()
     uf.info("Starting to draw parts...", "Assembly file made", gv.level, source)
 
+    heatedbed.design()
 
     # Make components for x-Axis, add to assembly, save and close
     xRodBottom.draw()
@@ -763,6 +786,12 @@ def makePrinter():
     zEndstop.assemble()
     uf.info("Done assembling zEndstop", "Finished zEndstop.assemble()", gv.level, source)
     uf.saveAndClose("zEndstop", False)
+
+    leadScrewCoupler.draw()
+    uf.info("Done drawing leadScrewCoupler", "Finished leadScrewCoupler.draw()", gv.level, source)
+    leadScrewCoupler.assemble()
+    uf.info("Done assembling leadScrewCoupler", "Finished leadScrewCoupler.assemble()", gv.level, source)
+    uf.saveAndClose("leadScrewCoupler", True)
 
     uf.positionZAxis()
 
@@ -900,12 +929,19 @@ def makePrinter():
     uf.info("Done assembling frameSpacers", "Finished frameSpacers.assemble()", gv.level, source)
     uf.saveAndClose("frameSpacers", False)
 
+    feet.draw()
+    uf.info("Done drawing Feet", "Finished feet.draw()", gv.level, source)
+    feet.assemble()
+    uf.info("Done assembling feet", "Finished feet.assemble()", gv.level, source)
+    uf.saveAndClose("feet", True)
+
+
+
     draw.setup("printBedSupport", 'Pocket001')
     draw.setup("extruderMountPlate", 'Pocket002')
     draw.setup("xEndIdlerPlate", 'Pocket')
     draw.setup("xEndMotorPlate", 'Pocket001')
     App.ActiveDocument = App.getDocument("PrinterAssembly")
-    #.ActiveDocument = #.getDocument("PrinterAssembly")
 
     uf.saveAssembly()
 
@@ -919,9 +955,10 @@ def makePrinter():
         slic3r.slic3r()
         uf.info("Finished slicing.", "Finished slicing", gv.level, source)
 
+    heatedbed.design()
     checklist.create()
+    marlin.marlin()
     zipup.zipup()
-
 
 try:
     makePrinter()

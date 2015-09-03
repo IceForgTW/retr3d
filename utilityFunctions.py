@@ -1,3 +1,20 @@
+# Copyright 2015 Matthew Rogge and Michael Uttmark
+# 
+# This file is part of Retr3d.
+# 
+# Retr3d is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# Retr3d is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with Retr3d.  If not, see <http://www.gnu.org/licenses/>.
+
 # import Math related
 from __future__ import division  # allows floating point division from integersimport math
 import math
@@ -205,13 +222,13 @@ def getFace(feature, x, compX, y, compY, z, compZ):
                 i = i + 1
     if x is not None and compX == -1:
         while i < len(possibleFaces):
-            if possibleFaces[i][0].CenterOfMass.x - .00001 >= x:
+            if possibleFaces[i][0].CenterOfMass.x + .00001 >= x:
                 possibleFaces.pop(i)
             else:
                 i = i + 1
     if x is not None and compX == 1:
         while i < len(possibleFaces):
-            if possibleFaces[i][0].CenterOfMass.x + .00001 <= x:
+            if possibleFaces[i][0].CenterOfMass.x - .00001 <= x:
                 possibleFaces.pop(i)
             else:
                 i = i + 1
@@ -224,13 +241,13 @@ def getFace(feature, x, compX, y, compY, z, compZ):
                 i = i + 1
     if y is not None and compY == -1:
         while i < len(possibleFaces):
-            if possibleFaces[i][0].CenterOfMass.y - .00001 >= y:
+            if possibleFaces[i][0].CenterOfMass.y + .00001 >= y:
                 possibleFaces.pop(i)
             else:
                 i = i + 1
     if y is not None and compY == 1:
         while i < len(possibleFaces):
-            if possibleFaces[i][0].CenterOfMass.y + .00001 <= y:
+            if possibleFaces[i][0].CenterOfMass.y - .00001 <= y:
                 possibleFaces.pop(i)
             else:
                 i = i + 1
@@ -243,13 +260,13 @@ def getFace(feature, x, compX, y, compY, z, compZ):
                 i = i + 1
     if z is not None and compZ == -1:
         while i < len(possibleFaces):
-            if possibleFaces[i][0].CenterOfMass.z - .00001 >= z:
+            if possibleFaces[i][0].CenterOfMass.z + .00001 >= z:
                 possibleFaces.pop(i)
             else:
                 i = i + 1
     if z is not None and compZ == 1:
         while i < len(possibleFaces):
-            if possibleFaces[i][0].CenterOfMass.z + .00001 <= z:
+            if possibleFaces[i][0].CenterOfMass.z - .00001 <= z:
                 possibleFaces.pop(i)
             else:
                 i = i + 1
@@ -258,7 +275,13 @@ def getFace(feature, x, compX, y, compY, z, compZ):
         string = "Face" + str(possibleFaces[0][1] + 1)
         return (feature, [string])
     elif len(possibleFaces) > 1:
-        raise Exception("getFace() error: Unable to determine a unique face.")
+        faceString = ""
+        i=0
+        for face in possibleFaces:
+            faceString += "Face" + str(face[1] + 1)+" "
+
+
+        raise Exception("getFace() error: Unable to determine a unique face. Remaining Faces:" + faceString)
     else:
         raise Exception("getFace() error: No such face exists.")
 
