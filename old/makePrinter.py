@@ -135,7 +135,7 @@ def makePrinter():
     import yRodR
     import zRodL
     import zRodR
-    import xCarriage
+    from parts import xCarriage
     import xRodClamp
     import xEndZRodHolder
     import xEndMotorPlate

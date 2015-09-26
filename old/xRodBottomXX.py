@@ -21,42 +21,14 @@ from __future__ import division  # allows floating point division from integers
 import FreeCAD as App
 import Part
 import Sketcher
-import Draft
 
 # Specific to printer
 import globalVars as gv
 
 
-class XRodBottom(object):
+class xRodBottom(object):
     def __init__(self):
-        pass
-
-    def assemble(self):
-        App.ActiveDocument = App.getDocument("xRodBottom")
-        xRodBottom = App.ActiveDocument.Pad.Shape
-        App.ActiveDocument = App.getDocument("PrinterAssembly")
-        App.ActiveDocument.addObject('Part::Feature', 'xRodBottom').Shape = xRodBottom
-
-        # Define shifts and move into place
-        xshift = -gv.xRodLength / 2
-        yshift = (gv.extruderNozzleStandoff
-                  - gv.zRodStandoff
-                  - gv.xEndZRodHolderFaceThickness
-                  - gv.xEndZRodHolderMaxNutFaceToFace / 2
-                  - gv.xMotorMountPlateThickness
-                  - gv.xRodClampThickness
-                  - gv.xRodDiaMax / 2)
-        zshift = 0
-
-        App.ActiveDocument = App.getDocument("PrinterAssembly")
-        Draft.move([App.ActiveDocument.getObject("xRodBottom")], App.Vector(xshift, yshift, zshift), copy=False)
-        App.ActiveDocument.recompute()
-
-
-        # Add to xAxisParts
-        xrb = App.ActiveDocument.getObject("xRodBottom")
-        if xrb not in gv.xAxisParts:
-            gv.xAxisParts.append(xrb)
+        self.neededInputs = [["Length", "300"], ["Diameter", "9"]]
 
     def draw(self):
         try:

@@ -23,7 +23,7 @@ test = None
 #Change the following to the path to the directory that will hold your printer designs
 #Unless using windows, then use \\ instead of either of the above
 #Make sure to use forward slashes like this / and not back slashes like this \ 
-freecadDir = "/Path/To/FreeCAD/"
+freecadDir = "C:\\Program Files (x86)\\FreeCAD 0.15\\bin"
 printerDir = "/Path/To/Store/3D/Files/"
  
 #Output Options
