@@ -1,12 +1,30 @@
-from __future__ import division # allows floating point division from integers
+# Copyright 2015 Matthew Rogge and Michael Uttmark
+# 
+# This file is part of Retr3d.
+# 
+# Retr3d is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# Retr3d is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with Retr3d.  If not, see <http://www.gnu.org/licenses/>.
+
+from __future__ import division # allows floating point division from integersimport math
 
 reloadClasses = False
 test = None
 
 #Change the following to the path to the directory that will hold your printer designs
+#Unless using windows, then use \\ instead of either of the above
 #Make sure to use forward slashes like this / and not back slashes like this \ 
-freecadDir = "C:\\Program Files (x86)\\FreeCAD 0.15\\bin\\"
-printerDir = "C:\\Users\\Master\\Documents\\Printers\\"
+freecadDir = "C:\\Program Files (x86)\\FreeCAD 0.15\\bin"
+printerDir = "/Path/To/Store/3D/Files/"
  
 #Output Options
 level = 2
@@ -53,8 +71,11 @@ frameJointPadding = 10 #ADVANCED Required distance at frame joints for welds whi
 #Mounting nut and bolt info                                                                                                                                                
 mountToPrintedDia = 3 #Actual diameter of holes that are used to mount items to printed parts. IE other printed parts or sheet metal.                                      
 mountToFrameDia = 4.12 #Actual diameter of holes that are used to mount items to the frame. Printed parts to frame or sheet metal to frame.                                
+mountToFrameHeadDia = 6         #Actual head diameter of bolts used to mount items to the frame.
+mountToFrameHeadThickness = 3   #Actual head Thickness of bolts used to mount items to the frame.
 mountToPrintedPadding = 3	#ADVANCED the minimum distance between the edge of a hole and the edge of the part                                                          
 printedToFrameDia = None 	#CALCULATED The adjusted diameter for printed parts that will be mounted to the frame.                                                      
+printedToFrameHeadDia = None    #CALCULATED The adjusted diameter for printed parts that will be mounted to the frame.                                                     
 printedToPrintedDia = None 	#CALCULATED The adjusted diameter for printed parts mounted to other printed parts or to non frame parts                                    
                                                                                                                                                                            
                                                                                                                                                                            
@@ -102,7 +123,7 @@ yBushingNutSeparation = None #Calculated the distance between bushing nuts on th
                                                                                                                                                                            
 #xRodClamp                                                                                                                                                                 
 xRodClampIdlerHoleDia = 3.5 #The diameter of the xRodClamp idler hole                                                                                                      
-xRodClampThickness = 3.5 					#ADVANCED Thickness of plastic around the largest diameter rod                                              
+xRodClampThickness = 3.5 				#ADVANCED Thickness of plastic around the largest diameter rod
 xRodClampPocketDepth = 25 				#ADVANCED Distance the xRods are inserted into the xRodClamp                                                        
 xRodClampMountHoleToEdgePadding = 3 	#ADVANCED Distance from side of xRodClamp to mountHole edge(ie not center)                                                          
 xRodClampMountHoleToRodPadding = 1.5	#ADVANCED The vertical distance from the edge of the largest xRod to the edges of the mounting holes                                
@@ -301,10 +322,22 @@ zEndstopJogWidth = 2 #The width of the jog used to trap the contacts
 zEndstopSupportWidth = None		#CALCULATED The width of the zEndstop                                                                                               
 zEndStopClampLength = None		#CALCULATED The length along the z axis of the zEndStop clamp                                                                       
 zEndstopBodyThickness = None 	#CALCULATED The thickness of the zEndstop between the zRod and the zEndStopCap                                                              
-                                                                                                                                                                           
-#LeadScrewCoupler vars                                                                                                                                                     
-leadScrewCouplerLength = 25 #The length (vertical axis) of the leadScrewCouplers                                                                                           
-leadScrewCouplerGap = 5 #The space above and below the leadScrewCoupler. For keeping the coupler from  crashing into zMotor mount plate or xCarriage                       
+
+#feet vars
+feetOffset = 2                  #ADVANCED The distance between the edge of the frame and the foot
+feetBaseThickness = 3           #ADVANCED The thickness of plastic clamped by the mounting bolt
+feetBoltHeadClearanceVert = 3   #ADVANCED The distance between the top of the bolt head and the bottom of the foot 
+feetBoltHeadClearanceHor = 0.5  #ADVANCED The gap between the bolt head and the wall of the pocket
+feetDraftAngle = 5              #ADVANCED The angle of draft on the feet. This makes the feet taper.
+
+#LeadScrewCoupler vars
+leadScrewCouplerLength = 25         #The length (vertical axis) of the leadScrewCouplers 
+leadScrewCouplerScrewClampDia = 10  #The diameter of the cut out for clamping the lead screw. Includes space for tubing.
+leadScrewCouplerShaftClampDia = 7   #The diameter of the cutout for clamping the motor shaft. Includes space for tubing.
+leadScrewCouplerClampGap = 2        #ADVANCED The gap between the two halves of the clamp.
+leadScrewCouplerGap = 5             #ADVANCED The space above and below the leadScrewCoupler. For keeping the coupler from  crashing into zMotor mount plate or xCarriage 
+leadScrewCouplerBaseThicnkess = 3	#ADVANCED The minimum thickness of the plastic on the clamps.
+leadScrewCouplerNutTrapPadding = 1.5#ADVANCED The padding between the nut traps and the edge of the leadScrewCoupler
                                                                                                                                                                            
 #Hole Calibration table                                                                                                                                                    
 #small hole diameters are adjusted for printed parts using this array.                                                                                                     
@@ -328,25 +361,23 @@ bushingNutTable = [] #The table of bushing nuts used to build the printer.
                                                                                                                                                                            
                                                                                                                                                                            
 #Standard Nut Sizes [Thread dia, Minor dia, Face to face, Thickness] in inches (will be converted)                                                                         
-standardNuts = [[0.1120, 0.0939, 1/4 , 3/32], #4                                                                                                                           
-				[0.1380, 0.1140, 5/16 , 7/64], #6                                                                                                           
-				[0.1640, 0.1390, 11/32, 1/8], #8                                                                                                            
-				[0.1900, 0.1560, 3/8 , 1/8],#10                                                                                                             
-				[0.2160, 0.181, 7/16, 5/32], #12                                                                                                            
+standardNuts = [[0.1120, 0.0939, 1/4 , 3/32],
+				[0.1380, 0.1140, 5/16 , 7/64],
+				[0.1640, 0.1390, 11/32, 1/8],
+				[0.1900, 0.1560, 3/8 , 1/8],
+				[0.2160, 0.181, 7/16, 5/32],
 				[1/4, 0.2070, 7/16, 7/32],                                                                                                                  
 				[5/16,0.2650, 1/2, 17/64],                                                                                                                  
 				[3/8, 0.321, 9/16, 21/64],                                                                                                                  
 				[7/16,0.376, 11/16, 3/8],                                                                                                                   
-				[1/2,0.434, 3/4, 7/16],                                                                                                                     
-#				[9/16,0.490, 7/8, 31/64],	#commented out because this size is uncommon                                                                
+				[1/2,0.434, 3/4, 7/16],
 				[5/8,0.546, 15/16, 35/64]                                                                                                                   
 				]                                                                                                                                           
                                                                                                                                                                            
                                                                                                                                                                            
 #Metric Nut Sizes [Thread dia, Minor dia, Face to face, Thickness] in mm                                                                                                   
 metricNuts =   [[2.5, 1.993, 5, 2],                                                                                                                                        
-				[3,2.439, 5.5, 2.4],                                                                                                                        
-#				[3.5, 2.829, 6, 2.8], #NOT COMMON                                                                                                           
+				[3,2.439, 5.5, 2.4],
 				[4, 3.220, 7, 3.2],                                                                                                                         
 				[5, 4.110, 8, 4],                                                                                                                           
 				[6, 4.891, 10, 5],                                                                                                                          
@@ -360,7 +391,7 @@ metricNuts =   [[2.5, 1.993, 5, 2],
                                                                                                                                                                            
 #Lengths of bolts available                                                                                                                                                
 standardBoltLengths = [.5, .75, 1, 1.25, 1.5, 2] #in inches (will be converted to mm)                                                                                      
-metricdBoltLengths = [10,12,16,20,25,30,35,40]                                                                                                                             
+metricdBoltLengths = [10,12,16,20,25,30,35,40]
 clampBoltLengths = [10,12,16,20,25,30,35,40]                                                                                                                               
                                                                                                                                                                            
 #BushingNut and leadScrew related                                                                                                                                          
@@ -400,18 +431,31 @@ zAxisParts = []
 
 #Plater Variables                                                                                                                                                          
 plate = False #To Plate or not to Plate, that is the Question                                                                                                               
-platerName = "plater" #Name of actual Plater file, eg "plater" "plater.exe" "plater.app"                                                                               
 platerWidth = 150 #width, width of the plate, in mm (default 150)                                                                                                          
 platerHeight = 150 #height of the plate, in mm (default 150)                                                                                                               
-platerPrecision = 0.5 #precision, in mm (default 0.5)                                                                                                                      
+platerPrecision = 0.5 #precision, in mm (default 0.5)
 platerSpacing = 2 #parts spacing, in mm (default 2)                                                                                                                        
 platerDelta = 2 #sets the spacing of the brute forcing (see below), default 2mm                                                                                          
 platerRotation = 90 #sets the angle of the brute forcing, default 90                                                     
 
+#Marlin Variables
+baudrate = 250000 #ADVANCED Communication speed for the printer
+maxTemp = 230 #ADVANCED Max temperature for the extruder
+bedMaxTemp = 120 #ADVANCED Max temperature for the heated bed
+extruderTempSensor = 1 #ADVANCED Sensor used to measure extruder temperature. Set via the Marlin sensor system
+bedTempSensor = 1 #ADVANCED Sensor used to measure bed temperature. Set via the Marlin sensor system
+xHomeDir = -1 #ADVANCED Direction to move to home on the X axis
+yHomeDir = -1 #ADVANCED Direction to move to home on the Y axis
+zHomeDir = -1 #ADVANCED Direction to move to home on the Z axis
+maxTolerance = 20 #ADVANCED  Tolerance for initial software defined build area.
+invertXDirection = False #ADVANCED Inverts the X stepper motor
+invertYDirection = False #ADVANCED Inverts the Y stepper motor
+invertZDirection = False #ADVANCED Inverts the Z stepper motor
+invertEDirection = False #ADVANCED Inverts the Extruder stepper motor
+
 #Slic3r Variables                                                                                                                                                         
 slic3r = False #Slice or nah?                                                                                                                                             
-sli3erName = "slic3r" #Name of actual Slic3r file, eg "slic3r" "slic3r.exe" "slic3r.app"                                                                                  
-sli3erVars = ""                                                                                                                                                           
+slic3rVars = ""                                                                                                                                                           
                                                                                                                                                          
 #Zip Variables                                                                                                                                            
-zipName = "Printer_Files" #Name of zip file                                                                                  
+zipName = "Printer_Files" #Name of zip file                 
