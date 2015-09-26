@@ -76,6 +76,8 @@ class Controller(object):
                         x.append(i)
                         i=i+1
             for num in list(reversed(x)):
+                if parts == []:
+                    break
                 del parts[num]
             if parts == []:
                 break
@@ -102,7 +104,7 @@ class Controller(object):
         parser.set("File Paths", "Printer Files Directory", "C:\\Users\\Public\\Documents\\Printers\\")
 
         i=0
-        for part in parts:
+        for part in list(sorted(parts)):
             exec("Part = self.Printer."+part)
             if Part.neededInputs:
                 parser.add_section(part)

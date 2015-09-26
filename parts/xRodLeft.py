@@ -7,11 +7,37 @@ sys.path.append(Printer().freecadDir)
 
 class xRodLeft(object):
     def __init__(self):
-        self.neededInputs = [["Length", "400"], ["Diameter", "8"]]
-        self.dependencies = ['xCarriage']
+        self.name = "xRodLeft"
+
+    @property
+    def __author__(self):
+        return "Matthew Rogge and Michael Uttmark"
+
+    @property
+    def __version__ (self):
+        return "0.2.0"
+
+    @property
+    def __status__(self):
+        return "In Development"
+
+    @property
+    def __contact__(self):
+        return ""
+
+    @property
+    def neededInputs(self):
+        return [["Diameter", "8"]]
+
+    @property
+    def dependencies(self):
+        return ["xRodTop"]
+
+    @property
+    def printed(self):
+        return True
 
     def draw(self):
-
         #import FreeCAD modules
         import FreeCAD as App
         import Part

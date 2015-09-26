@@ -16,8 +16,34 @@ import globalVars as gv
 class xCarriage(part.Part):
     def __init__(self):
         self.name = "xCarriage"
-        self.neededInputs = []
-        self.dependencies = ['xRodTop']
+
+    @property
+    def __author__(self):
+        return "Matthew Rogge and Michael Uttmark"
+
+    @property
+    def __version__ (self):
+        return "0.2.0"
+
+    @property
+    def __status__(self):
+        return "In Development"
+
+    @property
+    def __contact__(self):
+        return ""
+
+    @property
+    def neededInputs(self):
+        return []
+
+    @property
+    def dependencies(self):
+        return ["xRodLeft"]
+
+    @property
+    def printed(self):
+        return False
 
     def draw(self):
         self.defineVariables()

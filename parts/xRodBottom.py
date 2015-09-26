@@ -4,10 +4,35 @@ import part
 
 class xRodBottom(part.Part):
     def __init__(self):
-        self.neededInputs = [["Length_of_Shorter_X_Rod", "400"], ["Diameter", "8"]]
-        self.dependencies = False
         self.name = "xRodBottom"
-        self.printed = True
+
+    @property
+    def __author__(self):
+        return "Matthew Rogge and Michael Uttmark"
+
+    @property
+    def __version__ (self):
+        return "0.2.0"
+
+    @property
+    def __status__(self):
+        return "In Development"
+
+    @property
+    def __contact__(self):
+        return ""
+
+    @property
+    def neededInputs(self):
+        return [["Length_of_Shorter_X_Rod", "400"], ["Diameter", "8"]]
+
+    @property
+    def dependencies(self):
+        return False
+
+    @property
+    def printed(self):
+        return True
 
     def draw(self):
 
