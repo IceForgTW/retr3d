@@ -1,22 +1,25 @@
-import log
+from log import Logging
 import ConfigParser
 import importlib
 from os import walk
-
+import printer
+import re
+import utilities
+log = Logging()
+uf = utilities.Utilities()
 
 class Controller(object):
     def __init__(self):
-        self.freecadDir = "C:\\Program Files (x86)\\FreeCAD 0.15\\bin"
-        self.printerDir = ""
         self.reloadClasses = False
+        self.Printer = printer.Printer() #Controller has a Printer
 
     def start(self):
-        log.header("______     _       _____     _           _____     __      _____ ", False)
-        log.header("| ___ \   | |     |____ |   | |         |  _  |   /  |    |  _  |", False)
-        log.header("| |_/ /___| |_ _ __   / / __| |  __   __| |/' |   `| |    | |/' |", False)
-        log.header("|    // _ \ __| '__|  \ \/ _` |  \ \ / /|  /| |    | |    |  /| |", False)
-        log.header("| |\ \  __/ |_| | .___/ / (_| |   \ V / \ |_/ / _ _| |_ _ \ |_/ /", False)
-        log.header("\_| \_\___|\__|_| \____/ \__,_|    \_/   \___/ (_)\___/(_) \___/ ", False)
+        log.header(" _____      _       ____      _            ___     ___      ___  ", False)
+        log.header("|  __ \    | |     |___ \    | |          / _ \   |__ \    / _ \ ", False)
+        log.header("| |__) |___| |_ _ __ __) | __| |  __   __| | | |     ) |  | | | |", False)
+        log.header("|  _  // _ \ __| '__|__ < / _` |  \ \ / /| | | |    / /   | | | |", False)
+        log.header("| | \ \  __/ |_| |  ___) | (_| |   \ V / | |_| |_  / /_  _| |_| |", False)
+        log.header("|_|  \_\___|\__|_| |____/ \__,_|    \_/   \___/(_)|____|(_)\___/ ", False)
         log.bold("Version: 0.2.0 ", False)
         log.bold("If you encounter any issues, please let us know at https://github.com/maaphoo/retr3d/issues", False)
         self.generateConfig()
@@ -37,6 +40,14 @@ class Controller(object):
             i= 1+i
         for num in list(reversed(x)):
             del Parts[num]
+        self.Printer.parts = Parts
+        i=0
+        for part in Parts:
+            mod = importlib.import_module("parts."+part)
+            reload(mod)
+            Part = eval("mod."+Parts[i]+"()")
+            exec("self.Printer."+part+" = Part") #Add parts to Printer, eg Printer has a Part
+            i=i+1
         return Parts
 
     def sortParts(self):
@@ -45,8 +56,7 @@ class Controller(object):
         i=0
         x = []
         for part in parts:
-            mod = importlib.import_module("parts."+part)
-            Part = eval("mod."+parts[i]+"()")
+            exec("Part = self.Printer."+part)
             if Part.dependencies == False:
                 x.append(i)
             i=i+1
@@ -70,8 +80,7 @@ class Controller(object):
             if parts == []:
                 break
             for part in parts:
-                mod = importlib.import_module("parts."+part)
-                Part = eval("mod."+parts[i]+"()")
+                exec("Part = self.Printer."+part)
                 i=i+1
                 for depend in Part.dependencies:
                     if depend in staticParts:
@@ -94,8 +103,7 @@ class Controller(object):
 
         i=0
         for part in parts:
-            mod = importlib.import_module("parts."+part)
-            Part = eval("mod."+parts[i]+"()")
+            exec("Part = self.Printer."+part)
             if Part.neededInputs:
                 parser.add_section(part)
                 for input in Part.neededInputs:
@@ -109,7 +117,7 @@ class Controller(object):
         parts = self.sortParts()[0]
         i=0
         for part in parts:
-            mod = importlib.import_module("parts."+part)
-            Part = eval("mod."+parts[i]+"()")
+            exec("Part = self.Printer."+part)
             Part.draw()
+            uf.saveAndClose(part, Part.printed)
             i = i+1

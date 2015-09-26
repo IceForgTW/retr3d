@@ -7,6 +7,7 @@ class xRodBottom(part.Part):
         self.neededInputs = [["Length_of_Shorter_X_Rod", "400"], ["Diameter", "8"]]
         self.dependencies = False
         self.name = "xRodBottom"
+        self.printed = True
 
     def draw(self):
 

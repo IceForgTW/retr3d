@@ -1,4 +1,2 @@
-import controller
-
-C = controller.Controller()
-C.start()
+from controller import Controller
+Controller().start()

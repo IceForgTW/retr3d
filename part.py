@@ -6,6 +6,7 @@ __author__ = 'Master'
 class Part(object):
     def __init__(self):
         self.name = "Part"
+        self.neededInputs = []
 
     def defineVariables(self):
         parser = SafeConfigParser()

@@ -9,6 +9,7 @@ class xRodTop(part.Part):
         self.name = 'xRodTop'
         self.neededInputs = [["Length_of_Shorter_X_Rod", "400"], ["Diameter", "8"]]
         self.dependencies = False
+        self.printed = True
 
     def draw(self):
         self.defineVariables()

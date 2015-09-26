@@ -1,8 +1,8 @@
 #import Math stuff
-from __future__ import division # allows floating point division from integersimport math
-import controller as c
+from __future__ import division # allows floating point division from integers
 import sys
-sys.path.append(c.Controller().freecadDir)
+from printer import Printer
+sys.path.append(Printer().freecadDir)
 
 
 class xRodLeft(object):
